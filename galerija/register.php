@@ -1,4 +1,6 @@
+
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -33,6 +35,8 @@
         <div class="col-12" style="height: 5px"></div>
         <div class="col-12  bg-light"><h3 align="center">Registracija</h3></div>
         <div class="col-12" style="height: 25px"></div>
+
+
         <div class="col-12  bg-light">
 
             <table align="center">
@@ -43,8 +47,17 @@
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="inputGroupSelect01" style="width: 120px">Vaše ime:</label>
                         <div class="input-group-prepend">
-                            <input type="text" name="cust_name" class="form-control" placeholder="Upišite Vaše ime"
-                                   aria-label="cust_name" aria-describedby="basic-addon1">
+                            <?php
+                            if (isset($_GET['cust_name'])){
+                                $cust_name = $_GET['cust_name'];
+                                echo '<input type="text" name="cust_name" class="form-control" placeholder="Upišite Vaše ime"
+                                   aria-label="cust_name" aria-describedby="basic-addon1" value="'.$cust_name.'">';
+                            }
+                            else {
+                                echo '<input type="text" name="cust_name" class="form-control" placeholder="Upišite Vaše ime"
+                                   aria-label="cust_name" aria-describedby="basic-addon1">';
+                            }
+                            ?>
                         </div>
                     </div>
 
@@ -55,8 +68,17 @@
                         <div class="input-group-prepend">
                             <label class="input-group-text" for="inputGroupSelect01" style="width: 120px">Vaše prezime:</label>
                             <div class="input-group-prepend">
-                                <input type="text" name="cust_surname" class="form-control" placeholder="Upišite Vaše prezime"
-                                       aria-label="cust_surname" aria-describedby="basic-addon1">
+                                <?php
+                                if (isset($_GET['cust_surname'])){
+                                    $cust_surname = $_GET['cust_surname'];
+                                    echo '<input type="text" name="cust_surname" class="form-control" placeholder="Upišite Vaše prezime"
+                                       aria-label="cust_surname" aria-describedby="basic-addon1" value="'.$cust_surname.'">';
+                                }
+                                else {
+                                    echo '<input type="text" name="cust_surname" class="form-control" placeholder="Upišite Vaše prezime"
+                                       aria-label="cust_surname" aria-describedby="basic-addon1">';
+                                }
+                                ?>
                             </div>
                         </div>
 
@@ -67,8 +89,17 @@
                         <div class="input-group-prepend">
                             <label class="input-group-text" for="inputGroupSelect01" style="width: 120px">E-mail:</label>
                             <div class="input-group-prepend">
-                                <input type="email" name="cust_email" class="form-control" placeholder="Upišite Vaš e-mail"
-                                       aria-label="cust_email" aria-describedby="basic-addon1">
+                                <?php
+                                if (isset($_GET['cust_email'])){
+                                    $cust_email = $_GET['cust_email'];
+                                    echo '<input type="email" name="cust_email" class="form-control" placeholder="Upišite Vaš e-mail"
+                                       aria-label="cust_email" aria-describedby="basic-addon1" value="'.$cust_email.'">';
+                                }
+                                else {
+                                    echo '<input type="email" name="cust_email" class="form-control" placeholder="Upišite Vaš e-mail"
+                                       aria-label="cust_email" aria-describedby="basic-addon1">';
+                                }
+                                ?>
                             </div>
                         </div>
 
@@ -79,8 +110,17 @@
                         <div class="input-group-prepend">
                             <label class="input-group-text" for="inputGroupSelect01" style="width: 120px">Telefon:</label>
                             <div class="input-group-prepend">
-                                <input type="text" name="cust_phone" class="form-control" placeholder="Upišite Vaš broj telefona"
-                                       aria-label="cust_phone" aria-describedby="basic-addon1">
+                                <?php
+                                if (isset($_GET['cust_phone'])){
+                                    $cust_phone = $_GET['cust_phone'];
+                                    echo '<input type="text" name="cust_phone" class="form-control" placeholder="Upišite Vaš broj telefona"
+                                       aria-label="cust_phone" aria-describedby="basic-addon1" value="'.$cust_phone.'">';
+                                }
+                                else {
+                                    echo '<input type="text" name="cust_phone" class="form-control" placeholder="Upišite Vaš broj telefona"
+                                       aria-label="cust_phone" aria-describedby="basic-addon1">';
+                                }
+                                ?>
                             </div>
                         </div>
 
@@ -91,8 +131,17 @@
                         <div class="input-group-prepend">
                             <label class="input-group-text" for="inputGroupSelect01" style="width: 120px">Korisničko ime:</label>
                             <div class="input-group-prepend">
-                                <input type="text" name="cust_username" class="form-control" placeholder="Upišite korisničko ime"
-                                       aria-label="cust_username" aria-describedby="basic-addon1">
+                                <?php
+                                if (isset($_GET['cust_username'])){
+                                    $cust_username = $_GET['cust_username'];
+                                    echo '<input type="text" name="cust_username" class="form-control" placeholder="Upišite korisničko ime"
+                                       aria-label="cust_username" aria-describedby="basic-addon1" value="'.$cust_username.'">';
+                                }
+                                else {
+                                    echo '<input type="text" name="cust_username" class="form-control" placeholder="Upišite korisničko ime"
+                                       aria-label="cust_username" aria-describedby="basic-addon1">';
+                                }
+                                ?>
                             </div>
                         </div>
 
@@ -126,12 +175,49 @@
 
         </form>
         </table>
+
         </div>
         <div class="col-12 bg-light" style="height: 10px"></div>
+    <div class="col-12 text-center">
+
+        <?php
+        require 'db_config.php';
+
+        if (!isset($_GET['signup'])) {
+            exit();
+        }
+        else {
+            $signupCheck = $_GET['signup'];
+
+            if ($signupCheck == "emptyfields"){
+                echo "<p style='color: red'>Niste popunili sva polja.</p>";
+                exit();
+            }
+            elseif ($signupCheck == "invalidmailcust_name"){
+                echo "<p style='color: red'>Uneta e-mail adresa je nevažeća. Pokušajte ponovo. </p>";
+                exit();
+            }
+            elseif ($signupCheck == "sqlerror"){
+                echo "<p style='color: red'>Greška sa bazom podataka.</p>";
+                exit();
+            }
+            elseif ($signupCheck == "usertaken"){
+                echo "<p style='color: red'>Uneto korisničko ime već postoji. Pokušajte uneti nešto drugo.</p>";
+                exit();
+            }
+            elseif ($signupCheck == "success"){
+                echo "<p style='color: green'>Registracija je uspešna!</p>";
+                exit();
+            }}
+        ?>
+
+
+
+    </div>
+
 
     </div>
 </div>
-
 
 
 

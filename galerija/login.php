@@ -1,3 +1,8 @@
+<?php
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,14 +42,13 @@
 
     </div>
 </div>
-<br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br>
 <div class="container bg-light" style="width: 70%">
     <div class="row text-right">
         <div class="col-12" style="height: 5px"></div>
         <div class="col-12  bg-light"><h3 align="center">Prijava</h3></div>
         <div class="col-12" style="height: 25px"></div>
         <div class="col-12  bg-light">
-
             <table align="center">
                 <form method="post" action="includes/login_inc.php">
                     <tr><td colspan="3">
@@ -53,8 +57,17 @@
                                 </div>
                                     <div class="input-group mb-2">
                                     <div class="input-group-prepend">
-                                        <input type="text" name="cust_unmail" class="form-control" style="width: 200px"
-                                               aria-label="cust_unmail" aria-describedby="basic-addon1">
+                                        <?php
+                                        if (isset($_GET['cust_unmail'])){
+                                            $cust_unmail = $_GET['cust_unmail'];
+                                            echo '<input type="text" name="cust_unmail" class="form-control" style="width: 200px"
+                                               aria-label="cust_unmail" aria-describedby="basic-addon1" value="'.$cust_unmail.'">';
+                                        }
+                                        else {
+                                            echo '<input type="text" name="cust_unmail" class="form-control" style="width: 200px"
+                                               aria-label="cust_unmail" aria-describedby="basic-addon1">';
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                         </td></tr>
@@ -85,6 +98,37 @@
             </table>
         </div>
         <div class="col-12 bg-light" style="height: 10px"></div>
+
+    <div class="col-12 text-center">
+        <?php
+        require 'db_config.php';
+
+        if (!isset($_GET['login'])) {
+            exit();
+        }
+        else {
+            $signupCheck = $_GET['login'];
+
+            if ($signupCheck == "emptyfields"){
+                echo "<p style='color: red'>Niste popunili sva polja.</p>";
+                exit();
+            }
+            elseif ($signupCheck == "wrongpwd"){
+                echo "<p style='color: red'>Greška prilikom unosa lozinke. Pokušajte ponovo.</p>";
+                exit();
+            }
+            elseif ($signupCheck == "sqlerror"){
+                echo "<p style='color: red'>Greška sa bazom podataka.</p>";
+                exit();
+            }
+            elseif ($signupCheck == "nouser"){
+                echo "<p style='color: red'>Greška prilikom unosa korisničkog imena ili email-adrese. Pokušaj ponovo.</p>";
+                exit();
+            }
+
+            }
+        ?>
+    </div>
 
     </div>
 </div>

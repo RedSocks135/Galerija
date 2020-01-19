@@ -16,7 +16,7 @@ session_start();
 </head>
 <body style="font-family: Calibri; background-color: dimgrey;">
 
-<div class="container-fluid bg-light">
+<div class="container-fluid bg-light fixed-top">
     <div class="row text-center">
         <div class="col-12" style="height: 5px"></div>
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 bg-light"><h1 align="center">Galerija slika od slame</h1></div>
@@ -44,6 +44,51 @@ session_start();
 
     </div>
 </div>
+
+<br><br><br><br><br><br><br><br><br><br>
+
+<div class="container bg-light">
+    <div class="row text-center">
+        <div class="col-12" style="height: 30px"></div>
+        <?php
+        require "db_config.php";
+
+        $sql = "SELECT p.id, t.product_type_name, p.product_name, a.author_name, a.author_surname, p.product_size_description, p.product_year, p.product_image, p.product_price
+                    FROM authors a
+                    JOIN products p on p.id_author=a.id
+                    JOIN product_type t on t.id = p.id_product_type";
+        $query = mysqli_query($connection,$sql);
+
+        while ($row = mysqli_fetch_array($query)){
+            echo "<div class='col-12'><h3><b>\"".$row['product_name']."\" - ".$row['author_name'] ." ". $row['author_surname']."</b></h3></div>";
+            echo "<div class='col-12' style='height: 20px'></div>";
+            echo "<div class='col-lg-4 col-md-4 col-12'><img class=\"img-fluid\" src=\"admin/" . $row['product_image'] . "\"></div>";
+            echo "<div class='col-lg-2 col-md-2 col-3'><h3>Tip</h3><h5>" .$row['product_type_name']."</h5></div>";
+            echo "<div class='col-lg-2 col-md-2 col-3'><h3>Opis</h3><h5>" .$row['product_size_description']."</h5></div>";
+            echo "<div class='col-lg-2 col-md-2 col-3'><h3>Godina</h3><h5>" .$row['product_year']."</h5></div>";
+            echo "<div class='col-lg-2 col-md-2 col-3'><h3>Cena</h3><h5>" .$row['product_price']." RSD</h5></div>";
+            echo "";
+            echo "<div class='col-12' style='height: 30px'></div>";
+            echo "<div class='col-12'><hr></div>";
+            echo "<div class='col-12' style='height: 30px'></div>";
+
+
+        }
+        ?>
+
+
+
+        <div class="col-2"></div>
+
+
+
+
+
+
+
+
+
+    </div></div>
 
 
 </body>

@@ -7,14 +7,14 @@ if (isset($_POST['custlogin_submit'])) {
     $cust_password = $_POST['cust_password'];
 
     if (empty($cust_unmail || $cust_password)) {
-        header("Location: ../index.php?error=emptyfields");
+        header("Location: ../login.php?login=emptyfields&cust_unmail=$cust_unmail");
         exit();
     }
     else {
         $sql = "SELECT * FROM customers WHERE cust_username=? OR cust_email=?;";
         $stmt = mysqli_stmt_init($connection);
         if (!mysqli_stmt_prepare($stmt, $sql)) {
-            header("Location: ../index.php?error=sqlerror");
+            header("Location: ../login.php?login=sqlerror&cust_unmail=$cust_unmail");
             exit();
         }
         else {
@@ -24,7 +24,7 @@ if (isset($_POST['custlogin_submit'])) {
             if ($row = mysqli_fetch_assoc($result)) {
                 $pwdCheck = password_verify($cust_password, $row['cust_password']);
                 if ($pwdCheck == false) {
-                    header("Location: ../index.php?error=wrongpwd");
+                    header("Location: ../login.php?login=wrongpwd&cust_unmail=$cust_unmail");
                     exit();
                 }
                 elseif ($pwdCheck == true) {
@@ -39,7 +39,7 @@ if (isset($_POST['custlogin_submit'])) {
 
             }
             else {
-                header("Location: ../index.php?error=nouser");
+                header("Location: ../login.php?login=nouser");
                 exit();
             }
         }
