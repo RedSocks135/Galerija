@@ -16,7 +16,7 @@
 
 	body, input, select, textarea {
 		color: #444;
-		font-family: "Lato", Helvetica, sans-serif;
+		font-family: "Calibri",  sans-serif;
 		font-size: 15pt;
 		font-weight: 300;
 		line-height: 1.65em;
@@ -675,7 +675,7 @@
 			font-size: 0.9em;
 			font-weight: 400;
 			padding: 0 0.75em 0.75em 0.75em;
-			text-align: left;
+			text-align: center;
 		}
 
 		table thead {
@@ -1091,4 +1091,8 @@
 					border-left: 0;
 					margin-left: 0;
 					padding-left: 0;
+				}
+
+				#skel-layers-wrapper{
+					min-height: 100vh;
 				}

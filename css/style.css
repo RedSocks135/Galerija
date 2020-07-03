@@ -16,7 +16,7 @@
 
 	body, input, select, textarea {
 		color: #444;
-		font-family: "Lato", Helvetica, sans-serif;
+		font-family: "Calibri" , sans-serif;
 		font-size: 15pt;
 		font-weight: 300;
 		line-height: 1.65em;
@@ -209,6 +209,7 @@
 	input[type="text"],
 	input[type="password"],
 	input[type="email"],
+	input,
 	select,
 	textarea {
 		-moz-appearance: none;
@@ -231,6 +232,7 @@
 		input[type="text"]:invalid,
 		input[type="password"]:invalid,
 		input[type="email"]:invalid,
+		input:invalid,
 		select:invalid,
 		textarea:invalid {
 			box-shadow: none;
@@ -239,6 +241,7 @@
 		input[type="text"]:focus,
 		input[type="password"]:focus,
 		input[type="email"]:focus,
+		input:focus,
 		select:focus,
 		textarea:focus {
 			border-color: #4dac71;
@@ -675,7 +678,7 @@
 			font-size: 0.9em;
 			font-weight: 400;
 			padding: 0 0.75em 0.75em 0.75em;
-			text-align: center;
+			text-align: left;
 		}
 
 		table thead {
@@ -1091,8 +1094,4 @@
 					border-left: 0;
 					margin-left: 0;
 					padding-left: 0;
-				}
-
-				#skel-layers-wrapper{
-					min-height: 100vh;
 				}

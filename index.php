@@ -68,8 +68,8 @@ session_start();
                 <p><a href="history.php">Istorija umetnosti u tehnici slame</a></p>
             </section>
             <section class="4u 12u$(small)">
-                <a href="authors.php"><img class="image fit" src="images/jozefa.png" alt="Jozefina Skenderović" /></a>
-                <p><a href="authors.php">Naše umetnice</a></p>
+                <a href="artists.php"><img class="image fit" src="images/jozefa.png" alt="Jozefina Skenderović" /></a>
+                <p><a href="artists.php">Naše umetnice</a></p>
             </section>
             <section class="4u$ 12u$(small)">
                 <a href="kolonija.php"><img class="image fit" src="images/kolonija.png" alt="Kolonija" /></a>

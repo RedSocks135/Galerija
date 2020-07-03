@@ -3,6 +3,7 @@ require "../../db_config.php";
 
 //Add a new author
 if(isset($_POST['authAdd'])) {
+
     $authName = mysqli_real_escape_string($connection,trim($_POST['authName']));
     $authSurname = $_POST['authSurname'];
     $authBio = $_POST['authBio'];
@@ -26,7 +27,7 @@ if(isset($_POST['authAdd'])) {
                 $sql = "INSERT INTO `authors` (author_name,author_surname,author_bio,author_image) VALUES('$authName','$authSurname','$authBio','$fileDestinationDB');";
                 $query = mysqli_query($connection,$sql);
 
-                header("Location: ../adminAuthors.php?uploadsuccess");
+                header("Location: ../adminAuthorsOverview.php?uploadsuccess");
                 exit;
 
             } else {
@@ -41,22 +42,23 @@ if(isset($_POST['authAdd'])) {
     } else {
         echo "Vaš fajl mora biti ekstenzije .jpg, .jpeg ili .png!";
     }
-
 }
 
-//Delete author
-if(isset($_POST['authDel'])) {
-    $authSelected = $_POST['authSelected'];
 
-    $sql = "DELETE FROM `authors` WHERE authors.id= '$authSelected';";
+
+//Delete author
+if(isset($_GET['authDel'])) {
+    $id=$_GET['id'];
+
+    $sql = "DELETE FROM `authors` WHERE authors.id= $id;";
     $query = mysqli_query($connection,$sql);
-    header("Location: ../adminAuthors.php?successfulydeleted");
+    header("Location: ../adminAuthorsOverview.php?successfullydeleted");
 }
 
 //Edit author atributes
 if(isset($_POST['authChange'])) {
 
-    $authSelected = $_POST['authSelected'];
+    $id=$_POST['id'];
 
     $authNameNew = $_POST['authNameNew'];
     $authSurnameNew = $_POST['authSurnameNew'];
@@ -70,46 +72,37 @@ if(isset($_POST['authChange'])) {
     $fileExtNew = explode('.', $fileNameNew);
     $fileActualExtNew = strtolower(end($fileExtNew));
 
-    if (exif_imagetype($fileTmpNameNew)){
-        if ($fileErrorNew === 0) {
-            if ($fileSizeNew < 2000000){
-                $fileNameNew = uniqid('', true).".".$fileActualExtNew;
-                $fileDestination = '../images/authors/'.$fileNameNew;
-                $fileDestinationDB = 'images/authors/'.$fileNameNew;
-                move_uploaded_file($fileTmpNameNew, $fileDestination);
+    if($fileTmpNameNew!="") {
+        if (exif_imagetype($fileTmpNameNew)) {
+            if ($fileErrorNew === 0) {
+                if ($fileSizeNew < 2000000) {
+                    $fileNameNew = uniqid('', true) . "." . $fileActualExtNew;
+                    $fileDestination = '../images/authors/' . $fileNameNew;
+                    $fileDestinationDB = 'images/authors/' . $fileNameNew;
+                    move_uploaded_file($fileTmpNameNew, $fileDestination);
 
-                    $sqlNewName = "UPDATE authors SET author_name = '$authNameNew' WHERE authors.id = '$authSelected';";
-                    $queryNewName = mysqli_query($connection,$sqlNewName);
-
-                    $sqlNewSurname = "UPDATE authors SET author_surname = '$authSurnameNew' WHERE authors.id = '$authSelected';";
-                    $queryNewSurname = mysqli_query($connection,$sqlNewSurname);
-
-                    $sqlNewBio = "UPDATE authors SET author_bio = '$authBioNew' WHERE authors.id = '$authSelected';";
-                    $queryNewBio = mysqli_query($connection,$sqlNewBio);
-
-                    $sqlNewImage = "UPDATE authors SET author_image = '$fileDestinationDB' WHERE authors.id = '$authSelected';";
-                    $queryNewImage = mysqli_query($connection,$sqlNewImage);
-
-                $query = mysqli_query($connection,$sql);
-
-                header("Location: ../adminAuthors.php?successfulyedited");
-                exit;
-
+                    $sqlNewName = "UPDATE authors SET author_name = '$authNameNew', author_surname = '$authSurnameNew', author_bio = '$authBioNew', author_image = '$fileDestinationDB' WHERE authors.id = $id;";
+                } else {
+                    header("Location: ../adminAuthorsOverview.php?error=imagetoolarge");
+                    exit;
+                }
             } else {
-                "Slika je previše velika!";
+                header("Location: ../adminAuthorsOverview.php?error=unknownerror");
+                exit;
             }
-
-
         } else {
-            echo "Greška prilikom otpremanja slike!";
+            header("Location: ../adminAuthorsOverview.php?error=fileisnotimage");
+            exit;
         }
-
     } else {
-        echo "Vaš fajl mora biti ekstenzije .jpg, .jpeg ili .png!";
+        $sqlNewName = "UPDATE authors SET author_name = '$authNameNew', author_surname = '$authSurnameNew', author_bio = '$authBioNew' WHERE authors.id = $id;";
     }
 
-}
+        $queryNewName = mysqli_query($connection, $sqlNewName);
 
-header("Location:../adminAuthors.php");
-exit();
+        header("Location: ../adminAuthorsOverview.php?successfulyedited");
+        exit;
+
+      }
+
 ?>

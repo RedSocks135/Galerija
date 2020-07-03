@@ -70,6 +70,10 @@
                         echo "<b style='color: #b0192e'>Vaš nalog nije verifikovan. Proverite Vaš mail.</b>";
                         break;
 
+                    case 'required':
+                        echo "<b style='color: #b0192e'>Molim Vas da se prijavite ukoliko želite da dodate proizvod u korpu</b>";
+                        break;
+
                     case 'success':
                         echo "<b style='color: #93e87d'>Uspešno ste se prijavili na sajt!</b>";
                         break;

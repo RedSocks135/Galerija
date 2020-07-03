@@ -57,7 +57,7 @@ if (isset($_POST['cust_submit'])) {
                    mysqli_stmt_bind_param($stmt, "sssssss", $cust_name, $cust_surname, $cust_email, $cust_phone, $cust_username, $hashedPwd, $vkey);
                    mysqli_stmt_execute($stmt);
 
-                   $send = mail($cust_email,"Verifikujte Vaš email","<a href=\"http://{$_SERVER['HTTP_HOST']}/galerija/pages/includes/verification.php?vkey=$vkey\">Kliknite ovde kako biste se registrovali</a>",'From: nenad.vojnic.n2v@gmail.com');
+                   $send = mail($cust_email,"Verifikujte Vaš email","<a href=\"http://{$_SERVER['HTTP_HOST']}/galerija/includes/verification.php?vkey=$vkey\">Kliknite ovde kako biste se registrovali</a>",'From: nenad.vojnic.n2v@gmail.com');
 
                    if ($send) {
                    header("Location: ../register.php?signup=success");}

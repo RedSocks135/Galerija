@@ -155,10 +155,6 @@ if(!isset($_SESSION['u_id']))
 
 </section>
 
-
-
-
-
 <!-- Overview -->
 <section class="wrapper style1 align-center">
     <div class="container">

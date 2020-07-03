@@ -113,11 +113,9 @@ if(!isset($_SESSION['u_id']))
                         <tfoot>
                         <tr>
                             <td align="center">
-                                <div>
                                     <ul class="actions">
                                         <li><button type="submit" href="adminIncludes/adminAuthors_inc.php" class="button" name="authAdd">Dodaj</button></li>
-                                    </ul>
-                                </div></td></tr>
+                                    </ul></td></tr>
                     </div>
                 </form>
             </tfoot>

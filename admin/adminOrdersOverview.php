@@ -9,7 +9,7 @@ if(!isset($_SESSION['u_id']))
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin - pregled Suvenira</title>
+    <title>Admin - pregled porudžbina</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="description" content="handmade straw souvenirs made by creative rural women">
     <meta name="keywords" content="tourism, souveniers, straw, rural lifestyle, straw art, straw artists, museums">
@@ -52,7 +52,7 @@ if(!isset($_SESSION['u_id']))
 
         <header class="major">
             <h2>Admin strana</h2>
-            <p>Pregled unešenih suvenira</p>
+            <p>Pregled porudžbina</p>
         </header>
     </div>
 </section>
@@ -62,66 +62,58 @@ if(!isset($_SESSION['u_id']))
     <div class="container">
         <div class="table-wrapper">
             <table class="alt" style="text-align: center; width: 100%;">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Tip</th>
-            <th>Naziv</th>
-            <th>Autor</th>
-            <th>Opis</th>
-            <th>Godina</th>
-            <th>Slika</th>
-            <th>Cena</th>
-            <th></th>
-        </tr>
-    </thead>
-<tbody>
-            <?php
-            require "../db_config.php";
 
-            $sql = "SELECT p.id, t.product_type_name, p.product_name, a.author_name, a.author_surname, p.product_size_description, p.product_year, p.product_image, p.product_price
-                    FROM authors a
-                    JOIN products p on p.id_author=a.id
-                    JOIN product_type t on t.id = p.id_product_type";
-            $query = mysqli_query($connection,$sql);
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Korisničko ime</th>
+                    <th>Suvenir</th>
+                    <th>Količina</th>
+                    <th>Pošiljka</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                require "../db_config.php";
 
-            while ($row = mysqli_fetch_array($query)){
-                echo "<tr>";
-                echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['id'] . "</td>";
-                echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['product_type_name'] . "</td>";
-                echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['product_name'] . "</td>";
-                echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['author_name'] ." ". $row['author_surname'] ."</td>";
-                echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['product_size_description'] . "</td>";
-                echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['product_year'] . "</td>";
-                echo "<td style='vertical-align: middle; font-weight: bold'><img src=\"" . $row['product_image'] . "\" style=\"width: 200px; height: 160px;\"></td>";
-                echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['product_price'] . " RSD" ."</td>";
-                echo "<td style='vertical-align: middle; font-weight: bold'>
-                      <a href=\"#\" class=\"button alt fit small\">Izmeni</a>
-                      <a href=\"#\" class=\"button alt fit small\">Obriši</a></td>";
-                echo "</tr>";
-            }
-            ?>
-</tbody>
+                $sql = "SELECT o.id, cu.cust_username, p.product_name, o.quantity, o.sending_method, o.order_status
+                    FROM customers cu
+                    JOIN orders o on o.id_customer=cu.id
+                    JOIN products p on o.id_product=p.id";
+                $query = mysqli_query($connection,$sql);
 
-                <tfoot>
-                <tr><td colspan="9" align="center">
-                <div class="6u$ 12u$(small)">
-                    <ul class="actions fit small">
-                        <li><a href="#" class="button fit small">Dodaj novi suvenir</a></li>
-                    </ul>
-                </div>
-                    </td></tr>
-                </tfoot>
-    </table>
+                while ($row = mysqli_fetch_array($query)){
+                    $wait = $row['order_status'] == 'Na čekanju' ? 'selected' : '';
+                    $sent = $row['order_status'] == 'Poslato' ? 'selected' : '';
+                    $declined = $row['order_status'] == 'Odbijeno' ? 'selected' : '';
+                    echo "<tr>";
+                    echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['id'] . "</td>";
+                    echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['cust_username'] . "</td>";
+                    echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['product_name'] . "</td>";
+                    echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['quantity'] ."</td>";
+                    echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['sending_method'] . "</td>";
+                    echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['order_status'] . "</td>";
+                    echo "<td style='vertical-align: middle; font-weight: bold'>";
+                    echo "<form name='choose' id='choose' method='POST' action='adminIncludes/adminOrders_inc.php'>";
+                    echo "<div class=\"select-wrapper\"><select name=\"status\">";
+                    echo "<option value=\"Na čekanju\"". $wait ."\">Na čekanju</option>";
+                    echo "<option value=\"Poslato\" ". $sent .">Poslato</option>";
+                    echo "<option value=\"Odbijeno\" ". $declined .">Odbijeno</option>";
+                    echo "</select>";
+                    echo "<input type='hidden' name='id' value='{$row['id']}'>";
+                    echo "<button type='submit' name='changeStatus' class=\"button alt fit small\">Izmeni status</button>";
+                    echo "</form>";
+                    echo "</td>";
+                }
+                ?>
+                </tbody>
+            </table>
 
-</table>
         </div>
     </div>
 </section>
-
-
-
-
 
 <!-- Overview -->
 <section class="wrapper style1 align-center">
@@ -149,6 +141,4 @@ if(!isset($_SESSION['u_id']))
 
 </body>
 </html>
-
-
 

@@ -39,7 +39,7 @@ if(isset($_POST['log'])) {
 }
 
 else {
-    header("Location:../adminLoginForm.php?login=error");
+    header("Location:../adminLogin.php?login=error");
     exit();
 }
 ?>

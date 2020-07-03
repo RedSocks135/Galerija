@@ -8,7 +8,7 @@ if(isset($_POST['productTypeAdd'])) {
     $sql = "INSERT INTO `product_type` (product_type_name) VALUES('$productTypeName');";
     $query = mysqli_query($connection, $sql);
 
-    header("Location: ../adminProducts.php?addedsuccessfully");
+    header("Location: ../adminSouvenirsOverview.php?addedsuccessfully");
     exit;
 }
 
@@ -18,7 +18,7 @@ if(isset($_POST['productTypeDel'])) {
 
     $sql = "DELETE FROM `product_type` WHERE product_type.id= '$productTypeSelected';";
     $query = mysqli_query($connection,$sql);
-    header("Location: ../adminProducts.php?successfulydeleted");
+    header("Location: ../adminSouvenirsOverview.php?successfulydeleted");
 }
 
 //Add a new product
@@ -48,7 +48,7 @@ if (isset($_POST['productAdd'])) {
                 move_uploaded_file($fileTmpName, $fileDestination);
                 $sql = "INSERT INTO `products` (id_product_type,product_name,id_author,product_size_description,product_year,product_image,product_price) VALUES('$productTypeSelected','$productName','$authSelected','$productSizeDescription','$productYear','$fileDestinationDB','$productPrice');";
                 $query = mysqli_query($connection, $sql);
-                header("Location: ../adminProducts.php?uploadsuccess");
+                header("Location: ../adminSouvenirsOverview.php?uploadsuccess");
                 exit;
 
             } else {
@@ -63,5 +63,67 @@ if (isset($_POST['productAdd'])) {
     } else {
         echo "Vaš fajl mora biti ekstenzije .jpg, .jpeg ili .png!";
     }
+
+}
+
+//Delete product
+if(isset($_GET['productDel'])) {
+    $id=$_GET['id'];
+
+    $sql = "DELETE FROM `products` WHERE products.id= $id;";
+    $query = mysqli_query($connection,$sql);
+    header("Location: ../adminSouvenirsOverview.php?successfullydeleted");
+}
+
+//Edit product atributes
+if(isset($_POST['productChange'])) {
+
+    $id=$_POST['id'];
+
+    $productNewTypeSelected = (int)$_POST['productNewTypeSelected'];
+    $authNewSelected= (int)$_POST['authNewSelected'];
+
+    $productNewName = $_POST['productNewName'];
+    $productNewSizeDescription = $_POST['productNewSizeDescription'];
+    $productNewYear = $_POST['productNewYear'];
+    $productNewPrice = $_POST['productNewPrice'];
+
+    $fileNameNew = $_FILES['file']['name'];
+    $fileTmpNameNew = $_FILES['file']['tmp_name'];
+    $fileSizeNew = $_FILES['file']['size'];
+    $fileErrorNew = $_FILES['file']['error'];
+    $fileTypeNew = $_FILES['file']['type'];
+    $fileExtNew = explode('.', $fileNameNew);
+    $fileActualExtNew = strtolower(end($fileExtNew));
+
+    if($fileTmpNameNew!="") {
+        if (exif_imagetype($fileTmpNameNew)) {
+            if ($fileErrorNew === 0) {
+                if ($fileSizeNew < 2000000) {
+                    $fileNameNew = uniqid('', true) . "." . $fileActualExtNew;
+                    $fileDestination = '../images/products/' . $fileNameNew;
+                    $fileDestinationDB = 'images/products/' . $fileNameNew;
+                    move_uploaded_file($fileTmpNameNew, $fileDestination);
+
+                    $sqlNewName = "UPDATE products SET id_product_type = '$productNewTypeSelected', product_name = '$productNewName', id_author = '$authNewSelected', product_size_description = '$productNewSizeDescription', product_year = '$productNewYear', product_image = '$fileDestinationDB', product_price = '$productNewPrice' WHERE products.id = $id;";
+                } else {
+                    header("Location: ../adminSouvenirsOverview.php?error=imagetoolarge");
+                    exit;
+                }
+            } else {
+                header("Location: ../adminSouvenirsOverview.php?error=unknownerror");
+                exit;
+            }
+        } else {
+            header("Location: ../adminSouvenirsOverview.php?error=fileisnotimage");
+            exit;
+        }
+    } else {
+        $sqlNewName = "UPDATE products SET id_product_type = '$productNewTypeSelected', product_name = '$productNewName', id_author = '$authNewSelected', product_size_description = '$productNewSizeDescription', product_year = '$productNewYear', product_price = '$productNewPrice' WHERE products.id = $id;";
+    }
+
+    $queryNewName = mysqli_query($connection, $sqlNewName);
+    header("Location: ../adminSouvenirsOverview.php?successfulyedited");
+    exit;
 
 }
