@@ -1,6 +1,14 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+
 if (isset($_POST['cust_submit'])) {
 
+
+    require 'Exception.php';
+    require 'PHPMailer.php';
+    require 'SMTP.php';
    require '../db_config.php';
 
    $cust_name = $_POST['cust_name'];
@@ -57,11 +65,30 @@ if (isset($_POST['cust_submit'])) {
                    mysqli_stmt_bind_param($stmt, "sssssss", $cust_name, $cust_surname, $cust_email, $cust_phone, $cust_username, $hashedPwd, $vkey);
                    mysqli_stmt_execute($stmt);
 
-                   $send = mail($cust_email,"Verifikujte Vaš email","<a href=\"http://{$_SERVER['HTTP_HOST']}/galerija/includes/verification.php?vkey=$vkey\">Kliknite ovde kako biste se registrovali</a>",'From: nenad.vojnic.n2v@gmail.com');
+                   try {
+                       $mail = new PHPMailer();
+                       $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+                       $mail->isSMTP();
+                       $mail->Host = 'mail.vardump.me';
+                       $mail->SMTPAuth = true;
+                       $mail->Username = 'nenad@galerija.vardump.me';
+                       $mail->Password = 'duncoskaboca69';
+                       
+                       $mail->setFrom('nenad@galerija.vardump.me', 'Galerija');
+                       $mail->addAddress($cust_email);
 
-                   if ($send) {
-                   header("Location: ../register.php?signup=success");}
-                   else {
+                       $mail->isHTML(true);
+                       $mail->Subject = "Verifikujte email";
+                       $mail->Body    = "<a href=\"http://galerija.vardump.me/includes/verification.php?vkey=$vkey\">Kliknite ovde kako biste se registrovali</a>";
+
+                       $mail = $mail->send();
+                       if($mail) {
+                           header("Location: ../register.php?signup=success");
+                       } else {
+                           header("Location: ../register.php?signup=mailfail");
+                       }
+
+                   } catch (Exception $e) {
                        header("Location: ../register.php?signup=mailfail");
                    }
                    exit();
