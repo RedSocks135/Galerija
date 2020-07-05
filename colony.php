@@ -12,7 +12,7 @@ foreach ($_SESSION['cart'] as $item) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Naše umetnice - Galerija suvenira od slame Tavankut</title>
+    <title>Saziv prve kolonije naive u tehnici slame - Galerija suvenira od slame Tavankut</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="description" content="handmade straw souvenirs made by creative rural women">
     <meta name="keywords" content="tourism, souveniers, straw, rural lifestyle, straw art, straw artists, museums">
@@ -46,8 +46,8 @@ foreach ($_SESSION['cart'] as $item) {
                 echo '<li><a href="shop.php">Prodavnica</a></li>';
                 echo '<li><a href="includes/logout_inc.php">Odjava</a></li>';}
             else {
-                echo '<li><a href="index.php">Početna</a></li>';
-                echo '<li><a href="login.php">Prijava</a></li>
+                echo 'echo \'<li><a href="index.php">Početna</a></li>\';
+<li><a href="login.php">Prijava</a></li>
             <li><a href="register.php">Registracija</a></li>';
             }
             ?>
@@ -55,44 +55,42 @@ foreach ($_SESSION['cart'] as $item) {
     </nav>
 </header>
 
-
-<!-- Main -->
+<!-- Title -->
 <section id="main" class="wrapper">
     <div class="container">
 
         <header class="major">
-            <h2>Naše umetnice</h2>
-            <p>Inspirisane tradicijom, one stvaraju najlepše suvenire od slame</p>
+            <h2>Saziv Prve kolonije naive u tehnici slame</h2>
+            <p>Događaj kada se stvaraju najlepša dela</p>
         </header>
     </div>
 </section>
 
-<!--Authors table-->
+<hr style='border: 1px #c3c3c3 solid;'>
 
-<section>
+<!-- Main -->
+<section id="two" class="wrapper style2 align-center">
     <div class="container">
-
-
-<?php
-require "db_config.php";
-
-$sql = "SELECT * FROM authors";
-$query = mysqli_query($connection,$sql);
-
-while ($row = mysqli_fetch_array($query)) {
-    echo "<div class='row'>";
-    echo "<div class='6u 12u(small)'>
-          <img src='admin/" . $row['author_image'] . "' style='width: 100%; border-radius: 30px'>";
-    echo "</div>";
-    echo "<div class='6u 12u(small)'>";
-    echo "<h3 align='center'>" . $row['author_name'] ." ". $row['author_surname'] . "</h3>";
-    echo "<p style='text-align: justify'>".$row['author_bio']."</p>";
-    echo "</div>";
-    echo "</div>";
-    echo "<hr style='border: 1px #c3c3c3 solid'>";
-        }
-        ?>
-    </div>
+        <div class="row">
+            <section class="feature 12u 12u(small)">
+                <p style="text-align: justify"> Svake godine, u Sazivu Prve kolonije naive u tehnici slame, učestvuje oko 40 umetnika-naivaca, koji deset dana, rade u OŠ „Matija Gubec“ i čiji se radovi kasnije izlažu u Tavankutu i Subotici u okviru gradske Dužijance. Danas Društvo poseduje preko 400 slika od slame, koje su smeštene u župnom dvoru u Tavankutu, Osnovnoj školi i Galeriji. U okviru Kolonije se predstavljaju tradicionalni stari zanati, na kojima izlaže oko 10 izlagača.</p>
+            </section>
+            <section class="feature 12u 12u(small)">
+                <img class="image fit" src="images/colony.jpg" style="border-radius: 30px" alt="Kolonija" />
+            </section>
+            <section class="feature 12u 12u(small)">
+                <img class="image fit" src="images/colony2.jpg" style="border-radius: 30px" alt="Slika od slame" />
+            </section>
+            <section class="feature 12u 12u(small)">
+                <img class="image fit" src="images/colony3.jpg" style="border-radius: 30px" alt="Slika od slame" />
+            </section>
+            <section class="feature 12u 12u(small)">
+                <img class="image fit" src="images/colony4.jpg" style="border-radius: 30px" alt="Slika od slame" />
+            </section>
+            <section class="feature 12u 12u(small)">
+                <img class="image fit" src="images/colony5.jpg" style="border-radius: 30px" alt="Slika od slame" />
+            </section>
+        </div>
 </section>
 
 <!-- Footer -->
@@ -124,4 +122,3 @@ while ($row = mysqli_fetch_array($query)) {
 
 </body>
 </html>
-

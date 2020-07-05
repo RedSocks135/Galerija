@@ -8,17 +8,17 @@ if(isset($_POST['productTypeAdd'])) {
     $sql = "INSERT INTO `product_type` (product_type_name) VALUES('$productTypeName');";
     $query = mysqli_query($connection, $sql);
 
-    header("Location: ../adminSouvenirsOverview.php?addedsuccessfully");
+    header("Location: ../adminAddProduct.php?addedsuccessfully");
     exit;
 }
 
 //Delete product type
-if(isset($_POST['productTypeDel'])) {
-    $productTypeSelected = $_POST['productTypeSelected'];
+if(isset($_GET['productTypeDel'])) {
+    $id=$_GET['id'];
 
-    $sql = "DELETE FROM `product_type` WHERE product_type.id= '$productTypeSelected';";
+    $sql = "DELETE FROM `product_type` WHERE product_type.id=$id;";
     $query = mysqli_query($connection,$sql);
-    header("Location: ../adminSouvenirsOverview.php?successfulydeleted");
+    header("Location: ../adminAddProduct.php?successfulydeleted");
 }
 
 //Add a new product

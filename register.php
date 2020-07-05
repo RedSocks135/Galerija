@@ -77,12 +77,14 @@
 
         <section>
         <div class="table-wrapper">
-            <table class="alt">
+            <table class="alt" style="width: 70%">
                 <form method="post" action="includes/register_inc.php">
                 <tbody>
                 <tr>
-                    <td align="right"><label class="input-group-text" for="inputGroupSelect01">Vaše ime:</label></td>
-                    <td> <?php
+
+                    <td align="center">
+                        <label class="input-group-text" for="inputGroupSelect01">Vaše ime:</label>
+                        <?php
                         if (isset($_GET['cust_name'])){
                             $cust_name = $_GET['cust_name'];
                             echo '<input type="text" name="cust_name" class="form-control" placeholder="Upišite Vaše ime"
@@ -95,8 +97,10 @@
                         ?></td>
                 </tr>
                 <tr>
-                    <td align="right"><label class="input-group-text" for="inputGroupSelect01">Vaše prezime:</label></td>
-                    <td> <?php
+
+                    <td align="center">
+                        <label class="input-group-text" for="inputGroupSelect01">Vaše prezime:</label>
+                        <?php
                         if (isset($_GET['cust_surname'])){
                             $cust_surname = $_GET['cust_surname'];
                             echo '<input type="text" name="cust_surname" class="form-control" placeholder="Upišite Vaše prezime"
@@ -109,8 +113,10 @@
                         ?></td>
                 </tr>
                 <tr>
-                    <td align="right"><label class="input-group-text" for="inputGroupSelect01">E-mail:</label></td>
-                    <td><?php
+
+                    <td align="center">
+                        <label class="input-group-text" for="inputGroupSelect01">E-mail:</label>
+                        <?php
                         if (isset($_GET['cust_email'])){
                             $cust_email = $_GET['cust_email'];
                             echo '<input type="email" name="cust_email" class="form-control" placeholder="Upišite Vaš e-mail"
@@ -123,8 +129,9 @@
                         ?></td>
                 </tr>
                 <tr>
-                    <td align="right"><label class="input-group-text" for="inputGroupSelect01">Telefon:</label></td>
-                    <td>
+
+                    <td align="center">
+                        <label class="input-group-text" for="inputGroupSelect01">Telefon:</label>
                         <?php
                         if (isset($_GET['cust_phone'])){
                             $cust_phone = $_GET['cust_phone'];
@@ -138,8 +145,9 @@
                         ?></td>
                 </tr>
                 <tr>
-                    <td align="right"><label class="input-group-text" for="inputGroupSelect01">Korisničko ime:</label></td>
-                    <td>
+
+                    <td align="center">
+                        <label class="input-group-text" for="inputGroupSelect01">Korisničko ime:</label>
                         <?php
                         if (isset($_GET['cust_username'])){
                             $cust_username = $_GET['cust_username'];
@@ -153,19 +161,20 @@
                         ?></td>
                 </tr>
                 <tr>
-                    <td align="right">  <label class="input-group-text" for="inputGroupSelect01">Lozinka:</label></td>
-                    <td>
+
+                    <td align="center">
+                        <label class="input-group-text" for="inputGroupSelect01">Lozinka:</label>
                         <input type="password" name="cust_password" class="form-control" placeholder="Upišite lozinku"
                                aria-label="cust_password" aria-describedby="basic-addon1"></td>
                 </tr>
                 </tbody>
                 <tfoot>
                 <tr>
-                    <td colspan="2" align="center">
+                    <td align="center">
                         <div class="6u$ 12u$(small)">
                             <ul class="actions fit small">
-                                <li><button class="button fit small" name="cust_submit" type="submit">Registruj se</button></li>
-                                <li><button class="button alt fit small"  name="cust_reset" type="reset">Poništi</button></li>
+                                <li><button class="button small" name="cust_submit" type="submit">Registruj se</button></li>
+                                <li><button class="button alt small"   name="cust_reset" type="reset">Poništi</button></li>
 
                             </ul>
                         </div>

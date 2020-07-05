@@ -93,7 +93,7 @@ if(!isset($_SESSION['u_id']))
                 echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['author_name'] ." ". $row['author_surname'] ."</td>";
                 echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['product_size_description'] . "</td>";
                 echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['product_year'] . "</td>";
-                echo "<td style='vertical-align: middle; font-weight: bold'><img src=\"" . $row['product_image'] . "\" style=\"width: 200px; height: 160px;\"></td>";
+                echo "<td style='vertical-align: middle; font-weight: bold'><img src=\"" . $row['product_image'] . "\" style=\"max-width: 200px; max-height: 160px;\"></td>";
                 echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['product_price'] . " RSD" ."</td>";
                 echo "<td style='vertical-align: middle; font-weight: bold'>
                       <a href='adminChangeProduct.php?id={$row['id']}' class=\"button alt fit small\">Izmeni</a>
@@ -107,7 +107,7 @@ if(!isset($_SESSION['u_id']))
                 <tr><td colspan="9" align="center">
                 <div class="6u$ 12u$(small)">
                     <ul class="actions fit small">
-                        <li><a href="adminAddProduct.php" class="button fit small">Dodaj novi suvenir</a></li>
+                        <li><a href="adminAddProduct.php" class="button fit small">Dodaj novi suvenir / tip suvenira</a></li>
                     </ul>
                 </div>
                     </td></tr>

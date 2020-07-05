@@ -82,7 +82,7 @@ if(!isset($_SESSION['u_id']))
                         while ($row = mysqli_fetch_array($query)){
                             echo "<tr>";
                             echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['id'] . "</td>";
-                            echo "<td style='vertical-align: middle; font-weight: bold'><img src=\"" . $row['author_image'] . "\" style=\"width: 100px; height: 150px;\"></td>";
+                            echo "<td style='vertical-align: middle; font-weight: bold'><img src=\"" . $row['author_image'] . "\" style=\"max-width: 100px; max-height: 150px;\"></td>";
                             echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['author_name'] . "</td>";
                             echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['author_surname'] . "</td>";
                             echo "<td style='vertical-align: middle; font-weight: bold'>

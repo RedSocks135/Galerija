@@ -57,7 +57,7 @@ if(!isset($_SESSION['u_id']))
     </div>
 </section>
 
-<!--Add table-->
+<!--Add souvenir table-->
 <section>
     <div class="container">
         <div class="table-wrapper">
@@ -118,33 +118,37 @@ if(!isset($_SESSION['u_id']))
 </thead>
     <tbody>
                         <tr>
-                            <td>
+                            <td align="center">
                                 <div class="input-group-prepend">
+                                    <label class="input-group-text bg-secondary text-white" for="inputGroupSelect01">Naziv suvenira:</label>
                                     <input type="text" name="productName" class="form-control" placeholder="Naziv suvenira"
                                            aria-label="productName" aria-describedby="basic-addon1">
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td align="center">
                                 <div class="input-group-prepend">
+                                    <label class="input-group-text bg-secondary text-white" for="inputGroupSelect01">Opis:</label>
                                     <input type="text" name="productSizeDescription" class="form-control" placeholder="Veličina i/ili opis"
                                            aria-label="productSizeDescription" aria-describedby="basic-addon1">
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td align="center">
                                 <div class="input-group-prepend">
-                                    <input type="text" name="productYear" class="form-control" placeholder="Godina proizvodnje"
+                                    <label class="input-group-text bg-secondary text-white" for="inputGroupSelect01">Godina:</label>
+                                    <input type="text" name="productYear" class="form-control" placeholder="Godina"
                                            aria-label="productYear" aria-describedby="basic-addon1">
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td align="center">
                                 <div class="input-group-prepend">
-                                    <input type="text" name="productPrice" class="form-control" placeholder="Cena u RSD"
+                                    <label class="input-group-text bg-secondary text-white" for="inputGroupSelect01">Cena u RSD:</label>
+                                    <input type="text" name="productPrice" class="form-control" placeholder="Cena u RSD">
                                 </div>
                             </td>
                         </tr>
@@ -181,9 +185,82 @@ if(!isset($_SESSION['u_id']))
 
 </section>
 
+<br><br><br><br><br>
+
+<!--Add souvenir type table-->
+<section>
+    <div class="container">
+        <div class="table-wrapper">
+<table align="center" cellpadding="10px">
+
+    <form name="addProductType" method="POST" action="adminIncludes/adminProducts_inc.php"
+          enctype="multipart/form-data">
+        <thead>
+        <tr><th><h3>Dodavanje novog tipa suvenira</h3></th></tr>
+        <tr>
+            <td align="center">
+                <label class="input-group-text bg-secondary text-white" for=\inputGroupSelect01">Tip suvenira:</label>
+                <input type="text" name="productTypeName" class="form-control" placeholder="Naziv tipa suvenira" >
+            </td></tr></thead>
+        <tfoot>
+        <tr>
+            <td align="center">
+                <ul class="actions">
+                    <li><button type="submit" class="button" name="productTypeAdd">Dodaj</button></li>
+                </ul>
 
 
+            </td>
+        </tr>
+        </tfoot>
+    </form>
+</table>
+        </div>
+    </div>
+</section>
 
+<br><br><br><br><br>
+
+<!--Delete souvenir type table-->
+<section>
+    <div class="container">
+        <div class="table-wrapper">
+            <table align="center" cellpadding="10px">
+                <thead>
+                <tr><th><h3>Brisanje tipa suvenira</h3></th></tr>
+                <tr>
+                    <td align="center">
+
+                <form name="DelProductType" method="POST" action="adminIncludes/adminProducts_inc.php"
+                      enctype="multipart/form-data">
+
+                    <?php
+                    require_once '../db_config.php';
+
+                    $sql = "SELECT id, product_type_name FROM product_type";
+                    $query = mysqli_query($connection, $sql);
+                    $results = mysqli_fetch_all($query, MYSQLI_ASSOC);
+                    echo "<div class=\"12u$\">
+                                    <label class=\"input-group-text bg-secondary text-white\" for=\"inputGroupSelect01\" style='width: 128px'>Tip suvenira:</label>";
+                    echo "<div class=\"select-wrapper\"><select id='selectProductType2' class='custom-select' name='selectProductType2' style='font-weight:bold'>";
+                    foreach ($results as $result) {
+                        echo "<option name='productTypeSelected2' value='{$result['id']}'>{$result['product_type_name']}</option>";
+                    }
+                    echo "</thead>";
+                    echo "<tfoot>
+                <tr>
+                    <td align=\"center\">";
+                    echo "<a onclick='return confirm(\"Da li ste sigurni da želite da obrišete? (Svi suveniri ovog tipa će biti obrisani!)\")' href='adminIncludes/adminProducts_inc.php?id={$result['id']}&productTypeDel=1' name='ProductTypeDel' class=\"button\">Obriši</a></td>";
+                    ?>
+
+                    </td>
+                </tr>
+                </tfoot>
+                </form>
+            </table>
+        </div>
+    </div>
+</section>
 
 <!-- Overview -->
 <section class="wrapper style1 align-center">

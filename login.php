@@ -89,15 +89,16 @@
         <!-- Registration table -->
         <section>
             <div class="table-wrapper">
-                <table class="alt">
+                <table class="alt" style="width: 70%">
                     <form method="post" action="includes/login_inc.php">
                     <tbody>
                     <tr>
-                        <td align="right"><label class="input-group-text" for="inputGroupSelect01">Korisničko ime ili e-mail:</label></td>
-                        <td>                                      <?php
+                        <td align="center">
+                            <label class="input-group-text" for="inputGroupSelect01">Korisničko ime ili e-mail:</label>
+                            <?php
                             if (isset($_GET['cust_unmail'])){
                                 $cust_unmail = $_GET['cust_unmail'];
-                                echo '<input type="text" name="cust_unmail" class="form-control" style="width: 200px"
+                                echo '<input type="text" name="cust_unmail" class="form-control"
                                                aria-label="cust_unmail" aria-describedby="basic-addon1" value="'.$cust_unmail.'">';
                             }
                             else {
@@ -107,8 +108,9 @@
                             ?></td>
                     </tr>
                     <tr>
-                        <td align="right"><label class="input-group-text" for="inputGroupSelect01">Lozinka:</label></td>
-                        <td>  <input type="password" name="cust_password" class="form-control"
+                        <td align="center">
+                            <label class="input-group-text" for="inputGroupSelect01">Lozinka:</label>
+                            <input type="password" name="cust_password" class="form-control"
                                      aria-label="cust_password" aria-describedby="basic-addon1"></td>
                     </tr>
                     </tbody>

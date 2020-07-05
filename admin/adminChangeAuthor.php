@@ -118,7 +118,7 @@ if(!isset($_SESSION['u_id']))
                     <tr>
                     </tr>
                     <tr>
-                        <td><img src="<?=$result['author_image']?>" style="width: 180px; height: 250px; vertical-align: middle"></td>
+                        <td><img src="<?=$result['author_image']?>" style="max-width: 180px; max-height: 250px; vertical-align: middle"></td>
                         <td style="vertical-align: middle">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">

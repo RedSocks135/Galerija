@@ -39,7 +39,6 @@ foreach ($_SESSION['cart'] as $item) {
         <ul>
             <li><a href="checkout.php"><i class="fa fa-shopping-cart"></i><span style="position: relative; right: -10px;background-color: #3ba666;border-radius: 50%;padding: 4px"><?= $amount ?></span></a></li>
             <li><a href="index.php">Početna</a></li>
-            <li><a href="register.php">Registracija</a></li>
         </ul>
     </nav>
 </header>
@@ -55,7 +54,7 @@ foreach ($_SESSION['cart'] as $item) {
     </div>
 </section>
 
-
+<hr style="border: 1px #c3c3c3 solid">
 <section id="main" class="wrapper">
     <div class="container">
         <?php
@@ -74,13 +73,13 @@ foreach ($_SESSION['cart'] as $item) {
                     <img style='width: 100%' src='admin/<?=$row['product_image']?>'>
                 </div>
                 <div class='3u 12u(small) 12u(medium)'>
-                    <ul>
-                        <li style='vertical-align: middle; font-weight: bold'>Tip: <?=$row['product_type_name']?></li>
-                        <li style='vertical-align: middle; font-weight: bold'>Naziv: <?=$row['product_name']?></li>
-                        <li style='vertical-align: middle; font-weight: bold'>Autor: <?=$row['author_name']." ". $row['author_surname']?></li>
-                        <li style='vertical-align: middle; font-weight: bold'>Opis: <?=$row['product_size_description']?></li>
-                        <li style='vertical-align: middle; font-weight: bold'>Godina: <?=$row['product_year']?></li>
-                        <li style='vertical-align: middle; font-weight: bold'>Cena: <?=$row['product_price']?> RSD</li>
+                    <h3><b>"<?=$row['product_name']?>"</b></h3>
+                    <ul style="list-style-type: none; padding-left: 0">
+                        <li style='vertical-align: middle; font-size: larger'>Tip: <?=$row['product_type_name']?></li>
+                        <li style='vertical-align: middle; font-size: larger'>Autor: <?=$row['author_name']." ". $row['author_surname']?></li>
+                        <li style='vertical-align: middle; font-size: larger'>Opis: <?=$row['product_size_description']?></li>
+                        <li style='vertical-align: middle; font-size: larger'>Godina: <?=$row['product_year']?></li>
+                        <li style='vertical-align: middle; font-size: larger'>Cena: <?=$row['product_price']?> RSD</li>
                     </ul>
                     <div class="row">
                         <div class="10u 12u(small)">

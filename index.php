@@ -1,5 +1,12 @@
 <?php
 session_start();
+$amount = 0;
+if(!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+foreach ($_SESSION['cart'] as $item) {
+    $amount += $item['amount'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +40,9 @@ session_start();
             <?php
 
             if (isset($_SESSION['custID'])) {
+                echo '<li><a href="checkout.php"><i class="fa fa-shopping-cart"></i><span style="position: relative; right: -10px;background-color: #3ba666;border-radius: 50%;padding: 4px">'.$amount.'</span></a></li>';
                 echo '<li>Prijavljeni ste kao <span style="color: #cee8d8;">'.$_SESSION['custUsername'].'</span></li>';
+                echo '<li><a href="shop.php">Prodavnica</a></li>';
             echo '<li><a href="includes/logout_inc.php">Odjava</a></li>';}
             else {
                 echo '<li><a href="login.php">Prijava</a></li>
@@ -60,7 +69,7 @@ session_start();
     <div class="container">
         <header>
             <h2>Naša tradicija</h2>
-            <p>Saznajte više o umetnosti u tehnici slame, i našim umetnicama.</p>
+            <p>Saznajte više o umetnosti u tehnici slame i našim umetnicama.</p>
         </header>
         <div class="row 200%">
             <section class="4u 12u$(small)">
@@ -72,8 +81,8 @@ session_start();
                 <p><a href="artists.php">Naše umetnice</a></p>
             </section>
             <section class="4u$ 12u$(small)">
-                <a href="kolonija.php"><img class="image fit" src="images/kolonija.png" alt="Kolonija" /></a>
-                <p><a href="kolonija.php">Kolonija naive u tehnici slame</a></p>
+                <a href="colony.php"><img class="image fit" src="images/kolonija.png" alt="Kolonija" /></a>
+                <p><a href="colony.php">Kolonija naive u tehnici slame</a></p>
             </section>
         </div>
     </div>
@@ -83,38 +92,32 @@ session_start();
 <section id="two" class="wrapper style2 align-center">
     <div class="container">
         <header>
-            <h2>Lorem ipsum dolor sit</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, autem.</p>
+            <h2>Galerija Prve kolonije naive u tehnici slame Tavankut
+            </h2>
+            <p>O našem udruženju</p>
         </header>
         <div class="row">
-            <section class="feature 6u 12u$(small)">
-                <img class="image fit" src="images/pic01.jpg" alt="" />
-                <h3 class="title">Lorem ipsum dolor</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore ipsa voluptate, quae quibusdam. Doloremque similique, reiciendis sit quibusdam aperiam? Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+            <section class="feature 12u 12u(small)">
+                <img class="image fit" src="images/straw.jpg" style="border-radius: 30px" alt="Slika od slame" />
+                <h3 class="title">Ciljevi udruženja</h3>
+                <p style="text-align: justify">Galerija Prve kolonije naive u tehnici slame  sa sedištem u Tavankutu  je dobrovoljno, nevladino i neprofitno udruženje, osnovano radi ostvarivanja ciljeva u oblasti očuvanja i unapređenja naivne likovne umetnosti u tehnici slame, organizovanja izložbi slika nastalih u tehnici slame, kolonija i drugog umetničkog stvaralaštva, narodnih rukotvorina temeljenih na tradicionalnom načinu pletenja slame, razvoja ruralnog turizma, afirmacije vrednosti i ideja civilnog društva, socijalnih vrednosti, multikulturalizma, zaštite životne sredine i drugih aktivnosti u cilju razvoja lokalne zajednice.</p>
             </section>
-            <section class="feature 6u$ 12u$(small)">
-                <img class="image fit" src="images/pic02.jpg" alt="" />
-                <h3 class="title">Esse, fugiat, in</h3>
-                <p>Natus perspiciatis fugit illum porro iusto fuga nam voluptas minima voluptates deserunt, veniam reiciendis harum repellat necessitatibus. Animi, adipisci qui. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-            </section>
-            <section class="feature 6u 12u$(small)">
-                <img class="image fit" src="images/pic03.jpg" alt="" />
-                <h3 class="title">Voluptates, repudiandae, dolor</h3>
-                <p>Voluptatibus repellendus tempora, quia! Consequuntur atque, rerum quis, ullam labore officiis ipsa beatae dolore, assumenda eos harum repudiandae, qui ab! Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-            </section>
-            <section class="feature 6u$ 12u$(small)">
-                <img class="image fit" src="images/pic04.jpg" alt="" />
-                <h3 class="title">Eveniet, reiciendis, veniam</h3>
-                <p>Rem nulla molestiae inventore quibusdam repudiandae doloremque eveniet ullam, qui autem possimus saepe laudantium numquam sapiente vel. Repudiandae, nihil tempore. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-            </section>
-        </div>
-        <footer>
-            <ul class="actions">
-                <li>
-                    <a href="#" class="button alt big">Learn More</a>
-                </li>
-            </ul>
-        </footer>
+            <section class="feature 12u 12u(small)">
+                <img class="image fit" src="images/gallery.jpg" style="border-radius: 30px" alt="Izložba" />
+                <h3 class="title">Naša Galerija:</h3>
+                <ul style="text-align: left">
+                    <li>Prikuplja i obrađuje naučnu i stručnu literaturu iz oblasti naivne likovne umetnosti</li>
+                    <li>Organizuje, samostalno ili sa drugim institucijama kulture (muzej, biblioteka, škola…) likovne kolonije, izložbe, stručne skupove, savetovanja, tribine, seminare, kreativne radionice, kulturno-umetničke projekte i druge oblike aktivnosti vezane za likovno naivno stvaralaštvo</li>
+                    <li>Prati rad naivnih likovnih stvaralaca u tehnici slame</li>
+                    <li>Objavljuje izložbene kataloge, brošure, pedagoške sveske za likovne radionice  i druge multimedijalne publikacije</li>
+                    <li>Organizuje prosvetne radnike i druge stručnjake iz oblasti pedagogije, etnologije i istorije umetnosti za rad na edukaciji dece i omladine</li>
+                    <li>Organizuje volonterske akcije i druge aktivnosti</li>
+                    <li>Surađuje sa univerzitetima, muzejima, školama, stručnim udruženjima i drugim organizacijama u zemlji i inostranstvu</li>
+                    <li>Organizuje projekte edukativnog, kulturno-umetničkog i istraživačkog karaktera</li>
+                    <li>Pokreće razvojne inicijative, aktivnosti i projekte</li>
+
+
+                </ul>
     </div>
 </section>
 

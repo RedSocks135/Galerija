@@ -177,7 +177,7 @@ if(!isset($_SESSION['u_id']))
     <tr>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-        <td><img src="<?=$product['product_image']?>" style="width: 200px; height: 160px; vertical-align: middle"></td>
+        <td><img src="<?=$product['product_image']?>" style="max-width: 200px; max-height: 160px; vertical-align: middle"></td>
         <td style="vertical-align: middle">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
