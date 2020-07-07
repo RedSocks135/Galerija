@@ -37,12 +37,30 @@ foreach ($_SESSION['cart'] as $item) {
     <h1><a href="index.php">Galerija slika od slame</a></h1>
     <nav id="nav">
         <ul>
-            <li><a href="#"><i class="fa fa-shopping-cart"></i><span style="position: relative; right: -10px;background-color: #3ba666;border-radius: 50%;padding: 4px"><?= $amount ?></span></a></li>
+            <li><a href="#"><i class="fa fa-shopping-cart"></i><span style="position: relative; right: -10px;background-color: #3ba666;border-radius: 50%;padding: 4px; text-align: center"><?= $amount ?></span></a></li>
             <li><a href="shop.php">Prodavnica</a></li>
             <li><a href="index.php">Početna</a></li>
+            <li><a href="orders.php">Porudžbine</a></li>
         </ul>
     </nav>
 </header>
+
+<!-- Security messages -->
+<br><section style="text-align: center">
+    <?php
+    if (isset($_GET['sent'])){
+        $message=$_GET['sent'];
+
+        switch ($message){
+
+            case '1':
+                echo "<b style='color: #93e87d'>Kupovina je uspešno obavljena!</b>";
+                break;
+
+        }
+    }
+    ?>
+</section>
 
 <!-- Main -->
 <section id="main" class="wrapper">
@@ -84,7 +102,7 @@ foreach ($_SESSION['cart'] as $item) {
                     echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['author_name'] ." ". $row['author_surname'] ."</td>";
                     echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['product_size_description'] . "</td>";
                     echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['product_year'] . "</td>";
-                    echo "<td style='vertical-align: middle; font-weight: bold'><img src=\"admin/" . $row['product_image'] . "\" style=\"width: 200px; height: 160px;\"></td>";
+                    echo "<td style='vertical-align: middle; font-weight: bold'><img src=\"http://galerija.vardump.me/admin/" . $row['product_image'] . "\" style=\"max-width: 200px; max-height: 160px;\"></td>";
                     echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['product_price'] . " RSD" ."</td>";
                     echo "<td style='vertical-align: middle; font-weight: bold'>
                 <form action='includes/cart_inc.php' method='POST'>
@@ -108,9 +126,9 @@ foreach ($_SESSION['cart'] as $item) {
                         <br><br>
                         <label><b>Način preuzimanja:</b></label>
                         <div class="select-wrapper"><select name="shipping">
-                            <option value="post">Pošta</option>
-                            <option value="poste">Post ekspres</option>
-                            <option value="lp">Lično preuzimanje</option>
+                            <option value="Pošta">Pošta</option>
+                            <option value="Post ekspres">Post ekspres</option>
+                            <option value="Lično preuzimanje">Lično preuzimanje</option>
                         </select>
                         </div>
                     </form>

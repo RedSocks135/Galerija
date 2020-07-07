@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 05, 2020 at 11:43 AM
+-- Generation Time: Jul 07, 2020 at 10:21 PM
 -- Server version: 10.4.10-MariaDB
 -- PHP Version: 7.3.12
 
@@ -49,8 +49,8 @@ INSERT INTO `admins` (`id`, `username`, `password`) VALUES
 
 CREATE TABLE `authors` (
   `id` int(8) NOT NULL,
-  `author_name` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
-  `author_surname` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
+  `author_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `author_surname` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `author_bio` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `author_image` text COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -65,7 +65,7 @@ INSERT INTO `authors` (`id`, `author_name`, `author_surname`, `author_bio`, `aut
 (54, 'Kristina', 'Kovačić', 'Zaposlena je u OŠ: \"Matija Gubec\" kao nastavnica muzičke kulture. Pored svog posla, predaje slamarsku sekciju učenicima u školi.', 'images/authors/5f00fe74d111f7.69346206.jpg'),
 (55, 'Kata', 'Kujundžić', 'Nakon što je izgubila posao, na inicijativu svoje prijateljice, pronalazi se svetu slame. Umetnošću u tehnici slame se bavi duže od 20 godina. Pored umetnosti u tehnici slame, bavi se heklanjem i pletenjem.', 'images/authors/5f01038f890346.00570586.jpg'),
 (56, 'Nevenka', 'Obradović', 'Bavi se umetnošću u tehnici slame. Redovno učestvuje na Sazivu prve kolonije naive u tehnici slame.', 'images/authors/5f0104e1bd4fc3.48967130.jpg'),
-(57, 'Vera', 'Basil Palković', 'Bavi se umetnošću u tehnici slame. Redovno učestvuje na Sazivu prve kolonije naive u tehnici slame.', 'images/authors/5f01063bbc5036.33878711.jpg'),
+(57, 'Vera', 'Bašić Palković', 'Bavi se umetnošću u tehnici slame. Redovno učestvuje na Sazivu prve kolonije naive u tehnici slame.\"', 'images/authors/5f01063bbc5036.33878711.jpg'),
 (58, 'Marija', 'Dulić', 'Bavi se umetnošću u tehnici slame. Redovno učestvuje na Sazivu prve kolonije naive u tehnici slame.', 'images/authors/5f0106f515b9d7.24442674.jpg');
 
 -- --------------------------------------------------------
@@ -92,7 +92,37 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id`, `cust_name`, `cust_surname`, `cust_email`, `cust_phone`, `cust_username`, `cust_password`, `cust_vkey`, `cust_verified`, `cust_createdate`) VALUES
-(12, 'Nenad', 'Vojnić', 'nenad@mail.com', '2232545', 'Nenad123', '$2y$10$f6XYFlcVwYq9ioqrFts6n.jwG8SQK2aPfdDJvnuQaPO7BGWKSb0ua', 'ab7b420fb5b0f9c3618c18e7263e922b236be1cec70f91b5e6e422ff09f65bda', 1, '2020-07-05 09:34:56');
+(13, 'Nenad', 'Vojnić', 'nenad.vojnic.n2v@gmail.com', '4565467', 'nenad', '$2y$10$x4uEknUXmNNQJp6MaJEpjeD5HTMyYkUc88aPU/lmzTs9dwaKLyIs2', 'eee72102496754a1c22a3994ed76bb28c964fc91d02f41b7c3f088569959f9d6', 1, '2020-07-07 19:29:07'),
+(16, 'lala', 'asdasd', 'nenad@mail.com', '4565467', 'lala', '$2y$10$CNJAdt69asnReKhp5Kshz.asRKSg4Fl1rPMoPF8obcnLDNurIRbRK', '236b0098f8a3847358b27ed7085e14916fe4fb05dc73997b06b9ea95075dc9ee', 1, '2020-07-07 20:13:53');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ordered_items`
+--
+
+CREATE TABLE `ordered_items` (
+  `id` int(8) NOT NULL,
+  `id_product` int(8) NOT NULL,
+  `id_order` int(11) NOT NULL,
+  `quantity` decimal(5,0) NOT NULL,
+  `order_status` enum('Na čekanju','Poslato','Odbijeno') COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `ordered_items`
+--
+
+INSERT INTO `ordered_items` (`id`, `id_product`, `id_order`, `quantity`, `order_status`) VALUES
+(23, 7, 7, '3', 'Poslato'),
+(24, 5, 7, '1', 'Odbijeno'),
+(25, 17, 7, '2', 'Na čekanju'),
+(26, 7, 8, '3', 'Na čekanju'),
+(27, 5, 8, '1', 'Na čekanju'),
+(28, 17, 8, '2', 'Na čekanju'),
+(29, 24, 9, '1', 'Poslato'),
+(30, 14, 10, '2', 'Na čekanju'),
+(31, 28, 10, '1', 'Na čekanju');
 
 -- --------------------------------------------------------
 
@@ -101,21 +131,21 @@ INSERT INTO `customers` (`id`, `cust_name`, `cust_surname`, `cust_email`, `cust_
 --
 
 CREATE TABLE `orders` (
-  `id` int(8) NOT NULL,
-  `id_customer` int(8) NOT NULL,
-  `id_product` int(8) NOT NULL,
-  `quantity` decimal(5,0) NOT NULL,
-  `sending_method` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
-  `order_status` enum('Na čekanju','Poslato','Odbijeno') COLLATE utf8_unicode_ci NOT NULL
+  `id` int(11) NOT NULL,
+  `id_customers` int(11) NOT NULL,
+  `order_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `sending_method` varchar(30) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `id_customer`, `id_product`, `quantity`, `sending_method`, `order_status`) VALUES
-(7, 12, 28, '1', 'post', 'Poslato'),
-(8, 12, 15, '3', 'post', 'Poslato');
+INSERT INTO `orders` (`id`, `id_customers`, `order_date`, `sending_method`) VALUES
+(7, 13, '2020-07-07 19:49:39', 'Pošta'),
+(8, 13, '2020-07-07 19:55:20', 'Pošta'),
+(9, 13, '2020-07-07 19:56:01', 'Post ekspres'),
+(10, 16, '2020-07-07 20:20:46', 'Lično preuzimanje');
 
 -- --------------------------------------------------------
 
@@ -126,9 +156,9 @@ INSERT INTO `orders` (`id`, `id_customer`, `id_product`, `quantity`, `sending_me
 CREATE TABLE `products` (
   `id` int(8) NOT NULL,
   `id_product_type` int(8) NOT NULL,
-  `product_name` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
+  `product_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `id_author` int(8) NOT NULL,
-  `product_size_description` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `product_size_description` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `product_year` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
   `product_image` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `product_price` varchar(10) COLLATE utf8_unicode_ci NOT NULL
@@ -141,7 +171,7 @@ CREATE TABLE `products` (
 INSERT INTO `products` (`id`, `id_product_type`, `product_name`, `id_author`, `product_size_description`, `product_year`, `product_image`, `product_price`) VALUES
 (5, 2, 'Salaš u suncokretima', 46, '40x30 cm, zlatni ram', '2017.', 'images/products/5f00fef920a407.76371537.jpg', '6.000'),
 (6, 1, 'Papuče i šling', 46, '30x50 cm, zlatni ram', '2019.', 'images/products/5e2493e146d5b7.25122941.jpg', '5.000'),
-(7, 1, 'Momačko kolo', 45, '100x80 cm, zlatni ram', '1996.', 'images/products/5e2494fe0c50a0.37534200.jpg', '16.000'),
+(7, 1, 'Momačko kolo', 45, '100x80 cm, zlatni ram', '1996.', 'images/products/5f047a300a1c01.32835194.jpg', '15.000'),
 (14, 1, 'Bunjevka prid ogledalom', 45, '40x60 cm, drveni ram', '1995.', 'images/products/5f00f6ca8041f8.32343872.jpg', '15.000'),
 (15, 11, 'Anđeo', 46, 'Prečnik 10 cm, crvena mat boja', '2017.', 'images/products/5f00faad4ff0b1.88759113.jpg', '1.000'),
 (16, 4, 'Ljubavna čestitka', 46, '10x30 cm, bela pozadina', '2018.', 'images/products/5f00fb2a7fcaf4.00847068.jpg', '350'),
@@ -207,12 +237,19 @@ ALTER TABLE `customers`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `ordered_items`
+--
+ALTER TABLE `ordered_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_products` (`id_product`),
+  ADD KEY `fk_order` (`id_order`);
+
+--
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_customers` (`id_customer`),
-  ADD KEY `fk_products` (`id_product`);
+  ADD KEY `fk_customers` (`id_customers`);
 
 --
 -- Indexes for table `products`
@@ -248,13 +285,19 @@ ALTER TABLE `authors`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `ordered_items`
+--
+ALTER TABLE `ordered_items`
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -273,11 +316,17 @@ ALTER TABLE `product_type`
 --
 
 --
+-- Constraints for table `ordered_items`
+--
+ALTER TABLE `ordered_items`
+  ADD CONSTRAINT `fk_order` FOREIGN KEY (`id_order`) REFERENCES `orders` (`id`),
+  ADD CONSTRAINT `fk_products` FOREIGN KEY (`id_product`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `fk_customers` FOREIGN KEY (`id_customer`) REFERENCES `customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_products` FOREIGN KEY (`id_product`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_customers` FOREIGN KEY (`id_customers`) REFERENCES `customers` (`id`);
 
 --
 -- Constraints for table `products`

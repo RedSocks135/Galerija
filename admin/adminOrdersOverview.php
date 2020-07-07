@@ -32,7 +32,7 @@ if(!isset($_SESSION['u_id']))
 <!-- Header -->
 <header id="header" style="position: fixed">
 
-    <h1><a href="adminOverview.php">Pegled podataka</a></h1>
+    <h1><a href="adminOverview.php">Pregled podataka</a></h1>
     <nav id="nav">
         <ul>
             <?php
@@ -57,62 +57,77 @@ if(!isset($_SESSION['u_id']))
     </div>
 </section>
 
-<!--Souvenirs table-->
+<!--Orders table-->
 <section>
     <div class="container">
-        <div class="table-wrapper">
-            <table class="alt" style="text-align: center; width: 100%;">
 
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Korisničko ime</th>
-                    <th>Suvenir</th>
-                    <th>Količina</th>
-                    <th>Pošiljka</th>
-                    <th>Status</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
                 <?php
                 require "../db_config.php";
 
-                $sql = "SELECT o.id, cu.cust_username, p.product_name, o.quantity, o.sending_method, o.order_status
-                    FROM customers cu
-                    JOIN orders o on o.id_customer=cu.id
-                    JOIN products p on o.id_product=p.id";
+                $sql = "SELECT distinct o.id, o.sending_method, o.order_date, cu.cust_name, cu.cust_surname
+                    FROM orders o
+                    JOIN customers cu on o.id_customers=cu.id
+                    ";
                 $query = mysqli_query($connection,$sql);
 
                 while ($row = mysqli_fetch_array($query)){
-                    $wait = $row['order_status'] == 'Na čekanju' ? 'selected' : '';
-                    $sent = $row['order_status'] == 'Poslato' ? 'selected' : '';
-                    $declined = $row['order_status'] == 'Odbijeno' ? 'selected' : '';
-                    echo "<tr>";
-                    echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['id'] . "</td>";
-                    echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['cust_username'] . "</td>";
-                    echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['product_name'] . "</td>";
-                    echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['quantity'] ."</td>";
-                    echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['sending_method'] . "</td>";
-                    echo "<td style='vertical-align: middle; font-weight: bold'>" . $row['order_status'] . "</td>";
-                    echo "<td style='vertical-align: middle; font-weight: bold'>";
-                    echo "<form name='choose' id='choose' method='POST' action='adminIncludes/adminOrders_inc.php'>";
-                    echo "<div class=\"select-wrapper\"><select name=\"status\">";
-                    echo "<option value=\"Na čekanju\"". $wait ."\">Na čekanju</option>";
-                    echo "<option value=\"Poslato\" ". $sent .">Poslato</option>";
-                    echo "<option value=\"Odbijeno\" ". $declined .">Odbijeno</option>";
-                    echo "</select>";
-                    echo "<input type='hidden' name='id' value='{$row['id']}'>";
-                    echo "<button type='submit' name='changeStatus' class=\"button alt fit small\">Izmeni status</button>";
-                    echo "</form>";
-                    echo "</td>";
+
+                    echo "<div class=\"table-wrapper\">";
+                    echo "<table class=\"alt\" style=\"text-align: center; width: 100%;\"><tr>";
+                    echo "<th colspan='4'>ID Porudžbine</th>";
+                    echo "</tr><tr>";
+                    echo "<td colspan='4' style='vertical-align: middle; font-weight: bold'>" . $row['id'] . "</td>";
+                    echo "</tr><tr>";
+                    echo "<th colspan='4'>Poručilac</th>";
+                    echo "</tr><tr>";
+                    echo "<td colspan='4' style='vertical-align: middle; font-weight: bold'>" . $row['cust_name'] . " " . $row['cust_surname']. "</td>";
+                    echo "</tr><tr>";
+                    echo "<th colspan='4'>Datum i vreme porudžbine</th>";
+                    echo "</tr><tr>";
+                    echo "<td colspan='4' style='vertical-align: middle; font-weight: bold'>" . $row['order_date'] . "</td>";
+                    echo "</tr><tr>";
+                    echo "<th colspan='4'>Način slanja</th>";
+                    echo "</tr><tr>";
+                    echo "<td colspan='4' style='vertical-align: middle; font-weight: bold'>" . $row['sending_method'] . "</td>";
+                    echo "</tr><tr>";
+                    echo "<th>Suveniri</th>";
+                    echo "<th>Količina</th>";
+                    echo "<th>Status</th>";
+                    echo "<th>Izmena statusa</th>";
+                    echo "</tr><tr>";
+                    $sql2 = "SELECT oi.id, p.product_name, oi.quantity, oi.order_status 
+                    FROM ordered_items oi
+                    JOIN products p on oi.id_product=p.id
+                    WHERE id_order={$row['id']}
+                    ";
+                    $query2 = mysqli_query($connection,$sql2);
+                    while ($row2 = mysqli_fetch_array($query2)) {
+                        $wait = $row2['order_status'] == 'Na čekanju' ? 'selected' : '';
+                        $sent = $row2['order_status'] == 'Poslato' ? 'selected' : '';
+                        $declined = $row2['order_status'] == 'Odbijeno' ? 'selected' : '';
+                        echo "<tr>";
+                        echo "<td style='vertical-align: middle; font-weight: bold'>" . $row2['product_name'] . "</td>";
+                        echo "<td style='vertical-align: middle; font-weight: bold'>" . $row2['quantity'] ."</td>";
+                        echo "<td style='vertical-align: middle; font-weight: bold'>" . $row2['order_status'] . "</td>";
+                        echo "<td style='vertical-align: middle; font-weight: bold'>";
+                        echo "<form name='choose' id='choose' method='POST' action='adminIncludes/adminOrders_inc.php'>";
+                        echo "<div class=\"select-wrapper\"><select name=\"status\">";
+                        echo "<option value=\"Na čekanju\"". $wait ."\">Na čekanju</option>";
+                        echo "<option value=\"Poslato\" ". $sent .">Poslato</option>";
+                        echo "<option value=\"Odbijeno\" ". $declined .">Odbijeno</option>";
+                        echo "</select>";
+                        echo "<input type='hidden' name='id' value='{$row2['id']}'>";
+                        echo "<button type='submit' name='changeStatus' class=\"button alt fit small\">Izmeni status</button>";
+                        echo "</form>";
+                        echo "</td></tr>";
+                    }
+                    echo "</table>";
+                    echo "</div>";
+                    echo "<div style='height: 100px'></div>";
+
                 }
                 ?>
-                </tbody>
-            </table>
-
         </div>
-    </div>
 </section>
 
 <!-- Overview -->

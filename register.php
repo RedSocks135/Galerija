@@ -66,6 +66,10 @@
                         echo "<b style='color: #b0192e'>Korisničko ime je zauzeto. Pokušajte uneti nešto drugo.</b>";
                         break;
 
+                    case 'emailtaken':
+                        echo "<b style='color: #b0192e'>Postoji korisnik koji se registrovao već sa ovom mail adresom! Unesite drugu adresu.</b>";
+                        break;
+
                     case 'success':
                         echo "<b style='color: #93e87d'>Registracija je uspešna! Poslat Vam je e-mail za verifikaciju naloga.</b>";
                         break;

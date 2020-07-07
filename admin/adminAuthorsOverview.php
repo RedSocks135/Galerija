@@ -32,7 +32,7 @@ if(!isset($_SESSION['u_id']))
 <!-- Header -->
 <header id="header" style="position: fixed">
 
-    <h1><a href="adminOverview.php">Pegled podataka</a></h1>
+    <h1><a href="adminOverview.php">Pregled podataka</a></h1>
     <nav id="nav">
         <ul>
             <?php

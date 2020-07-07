@@ -32,7 +32,7 @@ if(!isset($_SESSION['u_id']))
 <!-- Header -->
 <header id="header" style="position: fixed">
 
-    <h1><a href="adminOverview.php">Pegled podataka</a></h1>
+    <h1><a href="adminOverview.php">Pregled podataka</a></h1>
     <nav id="nav">
         <ul>
             <?php
@@ -55,6 +55,55 @@ if(!isset($_SESSION['u_id']))
             <p>Pregled unešenih suvenira</p>
         </header>
     </div>
+</section>
+
+<!-- Security messages -->
+<section style="text-align: center">
+    <?php
+    if (isset($_GET['product'])){
+        $message=$_GET['product'];
+
+        switch ($message){
+
+            case 'imagetoolarge':
+                echo "<b style='color: #b0192e'>Slika koju želite da postavite je veća od 2Mb! Pokušajte postavitit drugu sliku.</b>";
+                break;
+
+            case 'unknownerror':
+                echo "<b style='color: #b0192e'>Došlo je do greške! Pokušajte ponovo.</b>";
+                break;
+
+            case 'fileisnotimage':
+                echo "<b style='color: #b0192e'>Greška! Postavili ste fajl koji nije ekstenzije .gif, .jpg, .jpeg ili .png!</b>";
+                break;
+
+            case 'priceoryearisnan':
+                echo "<b style='color: #b0192e'>Unešene vrednost za cenu i godinu moraju biti numeričke! Pokušajte ponovo!</b>";
+                break;
+
+            case 'uploadsuccess':
+                echo "<b style='color: #93e87d'>Uspešno ste dodali novi suvenir!</b>";
+                break;
+
+            case 'successfulyedited':
+                echo "<b style='color: #93e87d'>Uspešno ste izmenili suvenir!</b>";
+                break;
+
+            case 'successfullydeleted':
+                echo "<b style='color: #93e87d'>Uspešno ste obrisali suvenir!</b>";
+                break;
+
+            case 'typeaddedsuccessfully':
+                echo "<b style='color: #93e87d'>Uspešno ste dodali novi tip suvenira!</b>";
+                break;
+
+            case 'typesuccessfulydeleted':
+                echo "<b style='color: #93e87d'>Uspešno ste obrisali tip suvenira!</b>";
+                break;
+
+        }
+    }
+    ?>
 </section>
 
 <!--Souvenirs table-->

@@ -40,7 +40,7 @@ foreach ($_SESSION['cart'] as $item) {
             <?php
 
             if (isset($_SESSION['custID'])) {
-                echo '<li><a href="checkout.php"><i class="fa fa-shopping-cart"></i><span style="position: relative; right: -10px;background-color: #3ba666;border-radius: 50%;padding: 4px">'.$amount.'</span></a></li>';
+                echo '<li><a href="checkout.php"><i class="fa fa-shopping-cart"></i><span style="position: relative; right: -10px;background-color: #3ba666;border-radius: 50%;padding: 4px; text-align: center">'.$amount.'</span></a></li>';
                 echo '<li>Prijavljeni ste kao <span style="color: #cee8d8;">'.$_SESSION['custUsername'].'</span></li>';
                 echo '<li><a href="index.php">Početna</a></li>';
                 echo '<li><a href="orders.php">Porudžbine</a></li>';
@@ -83,7 +83,7 @@ $query = mysqli_query($connection,$sql);
 while ($row = mysqli_fetch_array($query)) {
     echo "<div class='row'>";
     echo "<div class='6u 12u(small)'>
-          <img src='https://galerija.vardump.me/admin/" . $row['author_image'] . "' style='width: 100%; border-radius: 30px'>";
+          <img src='http://galerija.vardump.me/admin/" . $row['author_image'] . "' style='width: 100%; border-radius: 30px'>";
     echo "</div>";
     echo "<div class='6u 12u(small)'>";
     echo "<h3 align='center'>" . $row['author_name'] ." ". $row['author_surname'] . "</h3>";

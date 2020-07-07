@@ -37,7 +37,7 @@ foreach ($_SESSION['cart'] as $item) {
     <h1><a href="index.php">Galerija slika od slame</a></h1>
     <nav id="nav">
         <ul>
-            <li><a href="checkout.php"><i class="fa fa-shopping-cart"></i><span style="position: relative; right: -10px;background-color: #3ba666;border-radius: 50%;padding: 4px"><?= $amount ?></span></a></li>
+            <li><a href="checkout.php"><i class="fa fa-shopping-cart"></i><span style="position: relative; right: -10px;background-color: #3ba666;border-radius: 50%;padding: 4px; text-align: center"><?= $amount ?></span></a></li>
             <li><a href="orders.php">Porudžbine</a></li>
             <li><a href="index.php">Početna</a></li>
         </ul>
@@ -71,9 +71,9 @@ foreach ($_SESSION['cart'] as $item) {
             ?>
             <div class='row'>
                 <div class='4u 12u(small) 12u(medium)'>
-                    <img style='width: 100%' src='https://galerija.vardump.me/admin/<?=$row['product_image']?>'>
+                    <img style='width: 100%' src='http://galerija.vardump.me/admin/<?=$row['product_image']?>'>
                 </div>
-                <div class='3u 12u(small) 12u(medium)'>
+                <div class='6u 12u(small) 12u(medium)'>
                     <h3><b>"<?=$row['product_name']?>"</b></h3>
                     <ul style="list-style-type: none; padding-left: 0">
                         <li style='vertical-align: middle; font-size: larger'>Tip: <?=$row['product_type_name']?></li>

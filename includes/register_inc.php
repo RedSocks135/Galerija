@@ -41,62 +41,71 @@ if (isset($_POST['cust_submit'])) {
        if (!mysqli_stmt_prepare($stmt, $sql)) {
            header("Location: ../register.php?signup=sqlerror");
            exit();
-       }
-       else {
+       } else {
            mysqli_stmt_bind_param($stmt, "s", $cust_username);
            mysqli_stmt_execute($stmt);
            mysqli_stmt_store_result($stmt);
            $resultCheck = mysqli_stmt_num_rows($stmt);
-           if($resultCheck > 0) {
+           if ($resultCheck > 0) {
                header("Location: ../register.php?signup=usertaken&cust_name=$cust_name&cust_surname=$cust_surname&cust_phone=$cust_phone&cust_email=$cust_email");
                exit();
-           }
-           else {
-               $vkey=hash('sha256',$cust_username.bin2hex(random_bytes(32)));
-               $sql = "INSERT INTO customers (cust_name, cust_surname, cust_email, cust_phone, cust_username, cust_password, cust_vkey) VALUES (?, ?, ?, ?, ?, ?, ?)";
+           } else {
+               $sql = "SELECT cust_email FROM customers WHERE cust_email=?";
                $stmt = mysqli_stmt_init($connection);
-               if (!mysqli_stmt_prepare($stmt, $sql)) {
-                   header("Location: ../register.php?signup=sqlerror");
+               mysqli_stmt_prepare($stmt, $sql);
+               mysqli_stmt_bind_param($stmt, "s", $cust_email);
+               mysqli_stmt_execute($stmt);
+               mysqli_stmt_store_result($stmt);
+               $resultCheck2 = mysqli_stmt_num_rows($stmt);
+               if ($resultCheck2 > 0) {
+                   header("Location: ../register.php?signup=emailtaken&cust_name=$cust_name&cust_surname=$cust_surname&cust_phone=$cust_phone&cust_username=$cust_username");
                    exit();
-               }
-               else {
-                   $hashedPwd = password_hash($cust_password, PASSWORD_DEFAULT);
+               } else {
+                   $vkey = hash('sha256', $cust_username . bin2hex(random_bytes(32)));
+                   $sql = "INSERT INTO customers (cust_name, cust_surname, cust_email, cust_phone, cust_username, cust_password, cust_vkey) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                   $stmt = mysqli_stmt_init($connection);
+                   if (!mysqli_stmt_prepare($stmt, $sql)) {
+                       header("Location: ../register.php?signup=sqlerror");
+                       exit();
+                   } else {
+                       $hashedPwd = password_hash($cust_password, PASSWORD_DEFAULT);
 
-                   mysqli_stmt_bind_param($stmt, "sssssss", $cust_name, $cust_surname, $cust_email, $cust_phone, $cust_username, $hashedPwd, $vkey);
-                   mysqli_stmt_execute($stmt);
+                       mysqli_stmt_bind_param($stmt, "sssssss", $cust_name, $cust_surname, $cust_email, $cust_phone, $cust_username, $hashedPwd, $vkey);
+                       mysqli_stmt_execute($stmt);
 
-                   try {
-                       $mail = new PHPMailer();
-                       $mail->SMTPDebug = SMTP::DEBUG_SERVER;
-                       $mail->isSMTP();
-                       $mail->Host = 'mail.vardump.me';
-                       $mail->SMTPAuth = true;
-                       $mail->Username = 'nenad@galerija.vardump.me';
-                       $mail->Password = 'duncoskaboca69';
-                       
-                       $mail->setFrom('nenad@galerija.vardump.me', 'Galerija');
-                       $mail->addAddress($cust_email);
+                       try {
+                           $mail = new PHPMailer();
+                           $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+                           $mail->isSMTP();
+                           $mail->Host = 'mail.vardump.me';
+                           $mail->SMTPAuth = true;
+                           $mail->Username = 'nenad@galerija.vardump.me';
+                           $mail->Password = 'duncoskaboca69';
 
-                       $mail->isHTML(true);
-                       $mail->Subject = "Verifikujte email";
-                       $mail->Body    = "<a href=\"http://galerija.vardump.me/includes/verification.php?vkey=$vkey\">Kliknite ovde kako biste se registrovali</a>";
+                           $mail->setFrom('nenad@galerija.vardump.me', 'Galerija');
+                           $mail->addAddress($cust_email);
 
-                       $mail = $mail->send();
-                       if($mail) {
-                           header("Location: ../register.php?signup=success");
-                       } else {
+                           $mail->isHTML(true);
+                           $mail->Subject = "Verifikujte email";
+                           $mail->Body = "<a href=\"http://galerija.vardump.me/includes/verification.php?vkey=$vkey\">Kliknite ovde kako biste se registrovali</a>";
+
+                           $mail = $mail->send();
+                           if ($mail) {
+                               header("Location: ../register.php?signup=success");
+                           } else {
+                               header("Location: ../register.php?signup=mailfail");
+                           }
+
+                       } catch (Exception $e) {
                            header("Location: ../register.php?signup=mailfail");
                        }
+                       exit();
 
-                   } catch (Exception $e) {
-                       header("Location: ../register.php?signup=mailfail");
                    }
-                   exit();
-
                }
            }
        }
-    }
+   }
    mysqli_stmt_close($stmt);
    mysqli_close($connection);
 

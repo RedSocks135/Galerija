@@ -1,13 +1,19 @@
 <?php
 session_start();
 require_once '../db_config.php';
+$idUser = $_SESSION['custID'];
+$sendingMethod = $_POST['shipping'];
+
+$sql = "INSERT INTO orders(id_customers,sending_method) VALUES ($idUser,'$sendingMethod')";
+$query = mysqli_query($connection,$sql);
+$id=mysqli_insert_id($connection);
+
 foreach ($_SESSION['cart'] as $item) {
-    $idUser = $_SESSION['custID'];
     $idProduct = $item['id'];
     $quantity = $item['amount'];
-    $sendingMethod = $_POST['shipping'];
-    $sql = "INSERT INTO orders(id_customer,id_product,quantity,sending_method,order_status) VALUES ($idUser,$idProduct,$quantity,'$sendingMethod','Na čekanju')";
-    $query = mysqli_query($connection,$sql);
+
+    $sql2 = "INSERT INTO ordered_items(id_product,id_order,quantity,order_status) VALUES ($idProduct,$id,$quantity,'Na čekanju')";
+    $query2 = mysqli_query($connection,$sql2);
 }
 $_SESSION['cart'] = [];
 header('Location: ../checkout.php?sent=1');
